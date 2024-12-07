@@ -4,24 +4,22 @@ public class MainTest {
 
     @Test
     public void testGetNumberOfCPUs() {
-        int cpus = main.getNumberOfCPUs();
-        assertTrue("Number of CPUs should be greater than 0", cpus > 0);
+        int cpuCount = main.getNumberOfCPUs();
+        assertTrue(cpuCount > 0, "CPU count should be greater than 0");
     }
 
     @Test
     public void testGetSystemArchitectureAndMemory() {
-        String systemInfo = main.getSystemArchitectureAndMemory();
-        
-        assertNotNull("System architecture and memory info should not be null", systemInfo);
-        assertTrue("System info should contain 'Architecture'", systemInfo.contains("Architecture:"));
-        assertTrue("System info should contain 'Total Memory:'", systemInfo.contains("Total Memory:"));
+        String result = main.getSystemArchitectureAndMemory();
+        assertTrue(result.contains("Architecture:") && result.contains("Total Memory:"),
+                "Result should include architecture and total memory");
     }
 
-    private void assertTrue(String number_of_CPUs_should_be_greater_than_0, boolean b) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+    @Test
+    public void testCanAllocateMemory() {
+        assertTrue(main.canAllocateMemory(20), "Should be able to allocate 20MB if enough memory is free.");
 
-    private void assertNotNull(String system_architecture_and_memory_info_shoul, String systemInfo) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        // Note: Testing with a very high value is not reliable since it depends on the system's current memory state.
+        assertFalse(main.canAllocateMemory(10000), "Should not be able to allocate 10000MB under normal conditions.");
     }
 }
